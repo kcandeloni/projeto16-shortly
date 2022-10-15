@@ -10,6 +10,6 @@ app.use(cors());
 
 app.use(router);
 
-app.listen(4000, () => {
-  console.log('Server is listening on port 4000.');
+app.listen(process.env.PORT, () => {
+  console.log(`Server is listening on port ${process.env.PORT}.`);
 });

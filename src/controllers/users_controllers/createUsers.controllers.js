@@ -1,4 +1,5 @@
-import connection from '../../database/database.js';
+import userRepository from '../../repositories/userRepository.js'
+import bcrypt from 'bcrypt';
 
 async function createUsers (req, res) {
     const {
@@ -6,13 +7,17 @@ async function createUsers (req, res) {
         email,
         password } = req.body;
 
-    connection.query(`INSERT INTO users 
-    (name, email, password) 
-    VALUES ($1, $2, $3);`, 
-    [name, email, password])
-        .then( () => {
-            res.sendStatus(201);
-        });
+        const passwordHash = bcrypt.hashSync(password, 10);
+
+    try {
+        const newUser = await userRepository.createUser(name, email, passwordHash);
+        if(newUser.rowCount !== 0){
+            return res.sendStatus(201);
+        }
+    } catch (err) {
+        console.error(err);
+        return res.sendStatus(500);
+    }
 }
 
 export default createUsers;

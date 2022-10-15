@@ -1,5 +1,5 @@
-import connection from '../database/database.js';
 import userSchema from '../schemas/users.schema.js';
+import userRepository from '../repositories/userRepository.js'
 
 async function valideteUser (req, res, next) {
     const { name, email, password, confirmPassword } = req.body;
@@ -20,8 +20,7 @@ async function valideteUser (req, res, next) {
     }
 
     try {
-        const uniqueEmail = await connection.query(
-          `SELECT * FROM users WHERE users.email = $1;`, [email]);
+        const uniqueEmail = await userRepository.getUserbyEmail(email);
         if(uniqueEmail.rowCount !== 0){
             return res.sendStatus(409);
         }
