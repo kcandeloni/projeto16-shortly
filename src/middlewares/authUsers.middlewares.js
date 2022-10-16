@@ -1,6 +1,5 @@
-import conection from '../db/db.js';
-
-let db = await conection();
+import sessionRepository from '../repositories/sessions.repository.js'
+import userRepository from '../repositories/users.repository.js'
 
 async function verificaToken(req, res, next) {
     const authorization = req.headers.authorization;
@@ -9,21 +8,18 @@ async function verificaToken(req, res, next) {
         return res.sendStatus(401);
     }
 
-    const session = await conection.query(
-        `SElECT * FROM sessions WHERE token = $1;`, [token]);
+    const session = await sessionRepository.getSession(token);
     if (session.rowCount === 0) {
         return res.sendStatus(401);
     }
 
-    const user = await conection.query(
-        `SElECT * FROM users WHERE id = $1;`, [session.userId]);
+    const user = await userRepository.getUserbyId(session.rows[0].userId);
 
     if (user.rowCount === 0) {
         return res.sendStatus(401);
     }
-    delete user.rows[0].password;
 
-    res.locals.user = user.rows[0];
+    res.locals.userId = session.rows[0].userId;
 
     next();
 }

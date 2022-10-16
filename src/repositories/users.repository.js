@@ -1,7 +1,8 @@
 import connection from '../database/database.js';
 
 async function getUserbyEmail(email) {
-	return await connection.query('SELECT * FROM users WHERE email=$1', [email]);
+	return await connection.query(`SELECT * FROM users WHERE email=$1`, 
+		[email]);
 }
 
 async function createUser(name, email, password) {
@@ -12,16 +13,14 @@ async function createUser(name, email, password) {
 			[name, email, password])
 }
 
-async function createSession(userId, token) {
-	return await connection.query(`
-		INSERT INTO sessions 
-			("userId", token) 
-			VALUES ($1, $2);`, 
-			[userId, token])
+async function getUserbyId(userId) {
+	return await connection.query(`SElECT * FROM users WHERE id = $1;`, 
+		[userId]
+	);
 }
 
 const userRepository = {
-	getUserbyEmail, createUser, createSession
+	getUserbyEmail, createUser, getUserbyId
 }
 
 export default userRepository

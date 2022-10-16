@@ -1,11 +1,11 @@
 import express from 'express';
-import createUsers from '../controllers/users_controllers/createUsers.controllers.js';
-import valideteUser from '../middlewares/validadeSignUp.middlewares.js';
-import validaSignIn from '../middlewares/valideSignIn.middlewares.js';
-import login from '../controllers/users_controllers/login.controllers.js';
+import createUsers from '../controllers/usersControllers/createUsers.controllers.js';
+import valideteUser from '../middlewares/validateSignUp.middlewares.js';
+import validateSignIn from '../middlewares/validateSignIn.middlewares.js';
+import login from '../controllers/usersControllers/login.controllers.js';
 
 const userRouter = express.Router();
 userRouter.post('/signup', valideteUser, createUsers);
-userRouter.post('/signin', validaSignIn, login);
+userRouter.post('/signin', validateSignIn, login);
 
 export default userRouter;

@@ -1,7 +1,7 @@
 import bcrypt from 'bcrypt';
 import { v4 as uuid } from 'uuid';
 
-import userRepository from '../../repositories/userRepository.js'
+import sessionRepository from '../../repositories/sessions.repository.js'
 
 async function singIn (req, res) {
     const { password } = req.body;
@@ -12,9 +12,9 @@ async function singIn (req, res) {
         const token = uuid();
         
         try {
-            const newSession = await userRepository.createSession(user.id, token);
+            const newSession = await sessionRepository.createSession(user.id, token);
             if(newSession.rowCount !== 0){
-                return res.send({token:token});
+                return res.status(200).send({token:token});
             }
         } catch (err) {
             console.error(err);

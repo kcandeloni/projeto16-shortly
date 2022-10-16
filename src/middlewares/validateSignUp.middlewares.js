@@ -1,5 +1,5 @@
 import userSchema from '../schemas/users.schema.js';
-import userRepository from '../repositories/userRepository.js'
+import userRepository from '../repositories/users.repository.js'
 
 async function valideteUser (req, res, next) {
     const { name, email, password, confirmPassword } = req.body;

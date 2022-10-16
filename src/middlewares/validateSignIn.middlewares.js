@@ -1,7 +1,7 @@
 import singInSchema from '../schemas/singIn.schema.js';
-import userRepository from '../repositories/userRepository.js';
+import userRepository from '../repositories/users.repository.js';
 
-async function validaSignIn(req, res, next) {
+async function validateSignIn(req, res, next) {
     const { email } = req.body;
 	const validation = singInSchema.validate(req.body, { abortEarly: false });
 
@@ -14,7 +14,7 @@ async function validaSignIn(req, res, next) {
     try {
         const getUser = await userRepository.getUserbyEmail(email);
         if(getUser.rowCount === 0){
-            return res.sendStatus(422);
+            return res.sendStatus(401);
         }
         res.locals.user = getUser.rows[0];
     } catch (err) {
@@ -25,4 +25,4 @@ async function validaSignIn(req, res, next) {
     next();
 }
 
-export default validaSignIn;
+export default validateSignIn;

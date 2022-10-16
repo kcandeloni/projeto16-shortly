@@ -1,4 +1,4 @@
-import userRepository from '../../repositories/userRepository.js'
+import userRepository from '../../repositories/users.repository.js'
 import bcrypt from 'bcrypt';
 
 async function createUsers (req, res) {
