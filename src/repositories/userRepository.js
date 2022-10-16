@@ -10,9 +10,18 @@ async function createUser(name, email, password) {
 			(name, email, password) 
 			VALUES ($1, $2, $3);`, 
 			[name, email, password])
-	}
+}
+
+async function createSession(userId, token) {
+	return await connection.query(`
+		INSERT INTO sessions 
+			("userId", token) 
+			VALUES ($1, $2);`, 
+			[userId, token])
+}
 
 const userRepository = {
-	getUserbyEmail, createUser
+	getUserbyEmail, createUser, createSession
 }
+
 export default userRepository
