@@ -1,9 +1,9 @@
-import loginSchema from '../schemas/login.schema.js';
+import singInSchema from '../schemas/singIn.schema.js';
 import userRepository from '../repositories/userRepository.js';
 
 async function validaSignIn(req, res, next) {
     const { email } = req.body;
-	const validation = loginSchema.validate(req.body, { abortEarly: false });
+	const validation = singInSchema.validate(req.body, { abortEarly: false });
 
     if (validation.error) {
         console.log(validation.error.details.map(err => err.message))

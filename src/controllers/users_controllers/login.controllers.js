@@ -3,7 +3,7 @@ import { v4 as uuid } from 'uuid';
 
 import userRepository from '../../repositories/userRepository.js'
 
-async function login (req, res) {
+async function singIn (req, res) {
     const { password } = req.body;
     const user = res.locals.user;
 
@@ -26,4 +26,4 @@ async function login (req, res) {
     }
 }
 
-export default login;
+export default singIn;
