@@ -1,7 +1,8 @@
 import connection from '../database/database.js';
 
 async function getUrlbyId(id) {
-	return await connection.query('SELECT * FROM urls WHERE id=$1', [id]);
+	return await connection.query(`SELECT u.id,u.url AS url,u."shortUrl" FROM urls u
+		WHERE id=$1;`, [id]);
 }
 
 async function createShortUrl(url, shortUrl, userId) {
