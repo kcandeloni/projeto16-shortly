@@ -4,8 +4,8 @@ async function createSession(userId, token) {
 	return await connection.query(`
 		INSERT INTO sessions 
 			("userId", token) 
-			VALUES ($1, $2);`, 
-			[userId, token])
+			VALUES ($1, $2);`
+			, [userId, token])
 }
 
 async function getSession(token) {
