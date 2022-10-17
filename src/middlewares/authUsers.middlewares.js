@@ -16,10 +16,11 @@ async function verificaToken(req, res, next) {
         const user = await userRepository.getUserbyId(session.rows[0].userId);
 
         if (user.rowCount === 0) {
-            return res.sendStatus(401);
+            return res.sendStatus(404);
         }
 
         res.locals.userId = session.rows[0].userId;
+        res.locals.user = user.rows[0];
     } catch (err) {
         console.error(err);
         return res.sendStatus(500);

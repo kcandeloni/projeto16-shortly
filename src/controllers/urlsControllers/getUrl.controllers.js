@@ -7,7 +7,7 @@ async function getUrlbyId (req, res) {
         return res.sendStatus(404);
     }
     try {
-        const getUrl = await urlRepository.getUrlbyId(id);
+        const getUrl = await urlRepository.getUrls(id, 'id');
         if(getUrl.rowCount !== 0){
             return res.status(200).send(getUrl.rows[0]);
         }
