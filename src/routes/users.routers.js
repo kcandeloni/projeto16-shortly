@@ -8,11 +8,15 @@ import authUser from '../middlewares/authUsers.middlewares.js';
 import myUrls from '../controllers/usersControllers/getMyUrls.controllers.js';
 import getRanking from '../controllers/usersControllers/getRancking.controllers.js';
 
+import logout from '../controllers/usersControllers/logout.controllers.js'
+
 const userRouter = express.Router();
 userRouter.post('/signup', valideteUser, createUsers);
 userRouter.post('/signin', validateSignIn, login);
 
 userRouter.get('/users/me', authUser, myUrls);
 userRouter.get('/ranking', getRanking);
+
+userRouter.get('/logout', authUser, logout); // Private Router
 
 export default userRouter;

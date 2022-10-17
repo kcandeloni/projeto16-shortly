@@ -14,8 +14,14 @@ async function getSession(token) {
         , [token])
 }
 
+async function logoutUser(userId) {
+	return await connection.query(`
+    DELETE FROM sessions WHERE "userId"=$1;`
+        , [userId])
+}
+
 const sessionRepository = {
-	createSession, getSession
+	createSession, getSession, logoutUser
 }
 
 export default sessionRepository
