@@ -19,8 +19,21 @@ async function getUserbyId(userId) {
 	);
 }
 
+async function getRanking() {
+	return await connection.query(`
+		SELECT users.id AS id, users.name AS name,
+			COUNT(urls."userId") AS "linksCount",
+			COALESCE(SUM(urls."visitCount"),0) AS "visitCount"
+			FROM users 
+			LEFT JOIN urls ON users.id=urls."userId"
+			GROUP BY users.id
+			ORDER BY "visitCount" DESC LIMIT 10;
+	`);
+}
+
 const userRepository = {
-	getUserbyEmail, createUser, getUserbyId
+	getUserbyEmail, createUser, getUserbyId,
+	getRanking
 }
 
 export default userRepository

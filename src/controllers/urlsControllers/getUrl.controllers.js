@@ -9,6 +9,9 @@ async function getUrlbyId (req, res) {
     try {
         const getUrl = await urlRepository.getUrls(id, 'id');
         if(getUrl.rowCount !== 0){
+            delete getUrl.rows[0].createdAt;
+            delete getUrl.rows[0].userId;
+            delete getUrl.rows[0].visitCount;
             return res.status(200).send(getUrl.rows[0]);
         }
         else{
